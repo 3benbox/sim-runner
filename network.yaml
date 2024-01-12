@@ -1,0 +1,32 @@
+apiVersion: keramik.3box.io/v1alpha1
+kind: Network
+metadata:
+  name: anchor-polling-stops
+spec:
+  casApiUrl: https://cas-qa.3boxlabs.com
+  ceramic:
+  -
+    image: 3boxben/ceramic-prod:anchor-polling-loop
+    ipfs:
+      go:
+        image: "ipfs/kubo:v0.19.1@sha256:c4527752a2130f55090be89ade8dde8f8a5328ec72570676b90f66e2cabf827d"
+    #image: ceramicnetwork/composedb:latest
+    # ipfs:
+      # rust:
+      #   env:
+      #     CERAMIC_ONE_EXTRA_CERAMIC_PEER_ADDRESSES: /dns4/ipfs-ceramic-private-qa-swarm.3boxlabs.com/tcp/4010/p2p/QmXcmXfLkkaGbQdj98cgGvHr5gkwJp4r79j9xbJajsoYHr,/dns4/ipfs-ceramic-public-qa-swarm.3boxlabs.com/tcp/4010/p2p/QmPP3RdaSWDkhcxZReGo591FWanLw9ucvgmUZhtSLt9t6D,/dns4/ipfs-ceramic-private-cas-qa-swarm.3boxlabs.com/tcp/4010/p2p/QmRvJ4HX4N6H26NgtqjoJEUyaDyDRUhGESP1aoyCJE1X1b
+      #     CERAMIC_ONE_NETWORK: dev-unstable
+      #   image: public.ecr.aws/r5b3e0r5/3box/ceramic-one:latest
+    env:
+      CERAMIC_LOG_LEVEL: "0"
+    resourceLimits:
+      storage: 3Gi
+  datadog:
+    enabled: true
+    profilingEnabled: true
+    version: "0"
+  ethRpcUrl: ""
+  pubsubTopic: ""
+  networkType: dev-unstable
+  privateKeySecret: ceramic-v4-qa
+  replicas: 1

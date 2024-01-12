@@ -1,0 +1,10 @@
+---
+apiVersion: "keramik.3box.io/v1alpha1"
+kind: Simulation
+metadata:
+  name: ceramic-write-only
+  namespace: keramik-anchor-polling-stops
+spec:
+  scenario: ceramic-write-only
+  users: 10
+  runTime: 5

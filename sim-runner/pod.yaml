@@ -1,0 +1,64 @@
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: sim-runner
+  namespace: keramik-anchor-polling-stops
+spec:
+  containers:
+    - name: ceramic-write-only
+      image: google/cloud-sdk
+      imagePullPolicy: Always
+      command: ["/bin/bash", "/simulation/sim-runner.sh"]
+      env:
+        - name: SIMULATION
+          value: "ceramic-write-only"
+        - name: USERS
+          value: "10"
+        - name: RUN_TIME
+          value: "5"
+      volumeMounts:
+        - name: sim-runner
+          mountPath: /simulation
+  volumes:
+    - name: sim-runner
+      configMap:
+        name: simulation
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 0
+  serviceAccountName: sim-runner
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: sim-runner
+  namespace: keramik-anchor-polling-stops
+rules:
+  - apiGroups:
+      - keramik.3box.io
+    resources:
+      - networks
+      - networks/status
+      - simulations
+      - simulations/status
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - patch
+      - delete
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: sim-runner
+  namespace: keramik-anchor-polling-stops
+subjects:
+  - kind: ServiceAccount
+    name: sim-runner
+    namespace: keramik-anchor-polling-stops
+roleRef:
+  kind: Role
+  name: sim-runner
+  apiGroup: rbac.authorization.k8s.io

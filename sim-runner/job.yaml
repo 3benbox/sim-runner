@@ -1,0 +1,26 @@
+---
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: sim-runner-ceramic-write-only
+spec:
+  schedule: "*/30 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: ceramic-write-only
+              image: google/cloud-sdk
+              imagePullPolicy: Always
+              command: ["/bin/bash", "/simulation/sim-runner.sh"]
+              volumeMounts:
+                - name: sim-runner
+                  mountPath: /simulation
+          volumes:
+            - name: sim-runner
+              configMap:
+                name: simulation
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 0
+          serviceAccountName: sim-runner

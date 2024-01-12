@@ -1,0 +1,10 @@
+---
+namespace: keramik-anchor-polling-stops
+resources:
+  - sa.yaml
+  - job.yaml
+configMapGenerator:
+  - name: simulation
+    files:
+      - simulation.yaml
+      - sim-runner.sh
