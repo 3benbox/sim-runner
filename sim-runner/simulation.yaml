@@ -6,5 +6,5 @@ metadata:
   namespace: keramik-anchor-polling-stops
 spec:
   scenario: ceramic-write-only
-  users: 10
-  runTime: 5
+  users: 1
+  runTime: 3

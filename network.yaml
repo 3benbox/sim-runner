@@ -26,7 +26,6 @@ spec:
     profilingEnabled: true
     version: "0"
   ethRpcUrl: ""
-  pubsubTopic: ""
   networkType: dev-unstable
   privateKeySecret: ceramic-v4-qa
   replicas: 1
